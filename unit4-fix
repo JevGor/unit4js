@@ -1,0 +1,208 @@
+// 1. Дана строка-предложение, содержащая избыточные пробелы. 
+// Преобразовать ее так, чтобы между словами был ровно один пробел.
+
+function oneSpace(str = "I  am   learning    js  as  there is   no choise   but it   is super   cool") {
+    let str2 = str.replace(/\s\s+/g, ' ')
+    return str2
+}
+
+oneSpace()
+
+// 2. Дана строка S и число N. 
+// Преобразовать строку S в строку длины N следующим образом:
+// если длина строки S больше N, то отбросить первые символы, 
+// если длина строки S меньше N, то в ее начало добавить символы "." (точка).
+
+function compareStr (s = "someString",n = 123456789011) {
+    n = n.toString ()
+    if ( s.length > n.length ) {
+        let z = s.length - n.length
+        console.log ( s.slice(z))
+
+    }
+    else if (s.length < n.length) {
+        let z = n.length - s.length
+        let dot = "."
+
+        console.log ( dot.repeat(z) + s)
+    }
+    else {
+        console.log (`Длины одинаковы, ${s} и ${n} можно сделать чаю`)
+    }
+}
+compareStr()
+
+// 3. Даны два числа: N1 и N2, и две строки: S1 и S2. 
+// Получить из этих строк новую строку,
+// объединив N1 первых символов строки S1 и N2 последних символов строки S2.
+
+function newStr2 (n1 = 3, n2 = 3, s1 = "string one", s2 = "string two"){
+    let ss1 = s1.split("").slice(0,n1).join("")
+    let ss2 = s2.split("").reverse().slice(0,n2).reverse().join("")
+
+    let newStr = `${ss1}${ss2}`
+
+    return newStr
+}
+
+newStr2()
+
+// второй вариант решения с помощью цикла while и методов pop & shift
+
+function newStr2 (n1 = 3, n2 = 3, s1 = "string one", s2 = "string two") {
+
+    let s11 = s1.split("")
+    while (n1 < s11.length) {
+        s11.pop()
+    }
+    let s111 = s11.join("")
+
+    let s22 = s2.split("")
+    while (n2 < s22.length) {
+        s22.shift()
+    }
+    let s222 = s22.join("")
+
+    return `${s111}${s222}`
+
+}
+
+newStr2()
+
+
+// 4. Даны две строки: S1 и S2. 
+// Проверить, содержится ли строка S2 в строке S1. 
+// Если да, то вывести номер позиции, начиная с которой
+// S2 содержится в S1, если нет, то вывести 0.
+
+
+// Option 1 index of symbol
+
+function strWrap(s1 = "Сахар портит хороший чай", s2 = "чай") {
+    if (s1.includes(s2)) {
+        return s1.indexOf(s2)
+    } else {
+        return 0
+    }
+}
+strWrap()
+
+
+// Option 2 index of word
+
+function strWrap(s1 = "Сахар портит хороший чай", s2 = "чай") {
+    if (s1.includes(s2)) {
+        let y = s1.split(" ").findIndex(function (elem) {
+            return elem == s2
+        })
+        return y
+    } else {
+        return 0
+    }
+}
+strWrap()
+
+
+// 5. Дана строка, состоящая из русских слов, 
+// разделенных пробелами (одним или несколькими). 
+// Определить количество слов в строке.
+
+var a = "Строка  ...    из русских слов что-то про... Эммм чай?"
+
+function clear (find = (!/^[А-Я][а-я]*/) , replace = ''){ // найди не крилицу
+    while (a.indexOf(find) > -1) {
+        a = a.replace(find,replace)
+    }
+    return a
+}
+clear()
+
+//
+
+var a = "Строка  . . .    из русских слов что-то про . . . Эммм чай?"
+var b = a.split(" ")
+var dupl = []
+
+for (let i = 0; i <= b.length; i++) {
+    if (b.filter(el => el === /^[А-Я][а-я]*/)){ // отфильтруй кириллицу
+        dupl.push(b[i])
+    }
+}
+console.log(dupl)
+
+
+
+function wordCount (rusWordStr = "Строка      из русских слов что-то про... Эммм чай?"){
+    let a = rusWordStr.replace(!/^[А-Я][а-я]*/, '').split(" ").length
+    return a
+}
+wordCount()
+
+
+
+
+// 6. Дана строка-предложение на русском языке. 
+// Преобразовать строку так, чтобы каждое слово 
+// начиналось с заглавной буквы.
+
+function firstCharToUpperCase (str = "предложение на русском языке") {
+    let upperCaseWords = " "
+    str = str.split(" ")
+    for (var i = 0; i < str.length; i += 1) {
+        upperCaseWords += str[i].substring(0, 1).toUpperCase() + str[i].substring(1, str[i].length) + " "
+    }
+    result = upperCaseWords.trim() // как можно красиво обрезать без доп переменной?
+    return result
+}
+
+firstCharToUpperCase ()
+
+// 7. Дана строка-предложение на русском языке и 
+// число k (0 < k < 10). Зашифровать строку, 
+// выполнив циклическую замену каждой буквы 
+// на букву того же регистра, расположенную 
+// в алфавите на k-й позиции после шифруемой буквы 
+// (например, для k = 2 "А" перейдет в "В", "а" — в "в", 
+// "Б" — в "Г", "я" — в "б" и т.д.). 
+// Букву "ё" в алфавите не учитывать, знаки препинания и пробелы не изменять.
+
+function secretStr (str = "Предложение На русскОм язЫке", num = 2) {
+    if (num >= 0 && num <= 10) {
+        let loewerCaseStr = str.toLowerCase()
+        let alph = "абвгдежзийклмнопрстуфхцчшщъыьэюя".split("")
+        let incoded = ""
+
+        for (let i = 0; i < str.length; i += 1) {
+            let currentLetter = loewerCaseStr[i]
+            if (currentLetter === " ") {
+                incoded += currentLetter
+                continue
+            }
+            if (currentLetter === ".") {
+                incoded += currentLetter
+                continue
+            }
+            if (currentLetter === ",") {
+                incoded += currentLetter
+                continue
+            }
+            let currentIndex = alph.indexOf(currentLetter)
+            let newIndex = currentIndex + num
+            if (newIndex > 31) newIndex = newIndex - 32
+            if (newIndex < 0) newIndex = 32 + newIndex
+            if (str[i] === str[i].toUpperCase()) {
+                incoded += alph[newIndex].toUpperCase()
+            }
+            else incoded += alph[newIndex]
+        }
+        return incoded
+    }
+    else {
+            console.log ("Шифровать не получиться num не в рамках от 1 до 10")
+        }
+
+}
+
+secretStr()
+
+
